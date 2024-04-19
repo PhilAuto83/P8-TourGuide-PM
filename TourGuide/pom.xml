@@ -40,6 +40,27 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>gpsUtil</groupId>
+			<artifactId>gpsUtil</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>${project.basedir}\libs\gpsUtil.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>RewardCentral</groupId>
+			<artifactId>RewardCentral</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>${project.basedir}\libs\RewardCentral.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>TripPricer</groupId>
+			<artifactId>TripPricer</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>${project.basedir}\libs\TripPricer.jar</systemPath>
+		</dependency>
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

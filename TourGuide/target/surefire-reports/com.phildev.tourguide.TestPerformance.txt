@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.phildev.tourguide.TestPerformance
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 0.061 s -- in com.phildev.tourguide.TestPerformance
