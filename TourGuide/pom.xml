@@ -8,7 +8,7 @@
 		<version>3.2.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.openclassrooms</groupId>
+	<groupId>com.phildev</groupId>
 	<artifactId>tourguide</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tourguide</name>
