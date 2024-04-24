@@ -7,12 +7,20 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import gpsUtil.location.VisitedLocation;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import tripPricer.Provider;
 
 public class User {
+	@NotNull
 	private final UUID userId;
+
+	@NotBlank
 	private final String userName;
+	@NotBlank
 	private String phoneNumber;
+	@Email
 	private String emailAddress;
 	private Date latestLocationTimestamp;
 	private CopyOnWriteArrayList<VisitedLocation> visitedLocations = new CopyOnWriteArrayList<>();

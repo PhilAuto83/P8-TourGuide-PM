@@ -1,24 +1,22 @@
 package com.phildev.tourguide;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
 import com.phildev.tourguide.helper.InternalTestHelper;
 import com.phildev.tourguide.service.RewardsService;
 import com.phildev.tourguide.service.TourGuideService;
 import com.phildev.tourguide.user.User;
 import com.phildev.tourguide.user.UserReward;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
+import org.junit.jupiter.api.Test;
 import rewardCentral.RewardCentral;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestRewardsService {
 

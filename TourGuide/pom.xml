@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.phildev</groupId>
 	<artifactId>tourguide</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>tourguide</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -29,7 +29,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

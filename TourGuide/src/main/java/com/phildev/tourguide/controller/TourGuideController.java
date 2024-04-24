@@ -1,18 +1,21 @@
 package com.phildev.tourguide.controller;
 
 
+import com.phildev.tourguide.dto.ClosestAttractionDTO;
 import com.phildev.tourguide.service.TourGuideService;
 import com.phildev.tourguide.user.User;
 
 import com.phildev.tourguide.user.UserReward;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tripPricer.Provider;
 
 import java.util.List;
@@ -28,25 +31,30 @@ public class TourGuideController {
     public String index() {
         return "Greetings from TourGuide!";
     }
+
+    @PostMapping(value="/createUser", consumes="application/json", produces = "application/json")
+    public ResponseEntity<String> createUser(@Valid @RequestBody User user, BindingResult result){
+        tourGuideService.addUser(user);
+        return new ResponseEntity<>(String.format("User %s was created with success with id %s", user.getUserName(), user.getUserId()), HttpStatus.CREATED);
+    }
     
     @GetMapping("/getLocation")
     public VisitedLocation getLocation(@RequestParam @NotBlank(message = "Username cannot be null or empty") String userName) {
     	return tourGuideService.getUserLocation(getUser(userName));
     }
-    
-    //  TODO: Change this method to no longer return a List of Attractions.
- 	//  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
- 	//  Return a new JSON object that contains:
-    	// Name of Tourist attraction, 
-        // Tourist attractions lat/long, 
-        // The user's location lat/long, 
-        // The distance in miles between the user's location and each of the attractions.
-        // The reward points for visiting each Attraction.
-        //    Note: Attraction reward points can be gathered from RewardsCentral
+
+    /**
+     * This method retrieves a {@link User} by his or her username and gets his or her location to show the five closest attractions with infos such as
+     * attraction name, latituden longitude, distance from user location and reward points
+     * @param userName
+     * @return ClosestAttractionDto which contains an Object {@link gpsUtil.location.Location} which is the user location
+     * and a List<Map>String, Object>> representing the info about each attraction
+     */
     @GetMapping("/getNearbyAttractions")
-    public List<Attraction> getNearbyAttractions(@RequestParam String userName) {
+    public ClosestAttractionDTO getNearbyAttractions(@RequestParam String userName) {
+        User user = tourGuideService.getUser(userName);
     	VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-    	return tourGuideService.getNearByAttractions(visitedLocation);
+    	return tourGuideService.getFiveClosestAttractionsWithInfos(visitedLocation, user);
     }
     
     @GetMapping("/getRewards")
