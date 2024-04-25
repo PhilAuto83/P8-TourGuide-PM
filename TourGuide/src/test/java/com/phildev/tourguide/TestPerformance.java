@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.phildev.tourguide.helper.InternalTestHelper;
 import com.phildev.tourguide.service.RewardsService;
-import com.phildev.tourguide.service.TourGuideService;
+import com.phildev.tourguide.service.UserService;
 import com.phildev.tourguide.user.User;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.jupiter.api.Disabled;
@@ -53,18 +53,18 @@ public class TestPerformance {
 		// Users should be incremented up to 100,000, and test finishes within 15
 		// minutes
 		InternalTestHelper.setInternalUserNumber(100);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		UserService userService = new UserService(gpsUtil, rewardsService);
 
 		List<User> allUsers = new ArrayList<>();
-		allUsers = tourGuideService.getAllUsers();
+		allUsers = userService.getAllUsers();
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		for (User user : allUsers) {
-			tourGuideService.trackUserLocation(user);
+			userService.trackUserLocation(user);
 		}
 		stopWatch.stop();
-		tourGuideService.tracker.stopTracking();
+		userService.tracker.stopTracking();
 
 		System.out.println("highVolumeTrackLocation: Time Elapsed: "
 				+ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
@@ -82,11 +82,11 @@ public class TestPerformance {
 		InternalTestHelper.setInternalUserNumber(100);
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		UserService userService = new UserService(gpsUtil, rewardsService);
 
 		Attraction attraction = gpsUtil.getAttractions().getFirst();
 		List<User> allUsers = new ArrayList<>();
-		allUsers = tourGuideService.getAllUsers();
+		allUsers = userService.getAllUsers();
 		allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
 
 		allUsers.forEach(rewardsService::calculateRewards);
@@ -95,7 +95,7 @@ public class TestPerformance {
 			assertTrue(!user.getUserRewards().isEmpty());
 		}
 		stopWatch.stop();
-		tourGuideService.tracker.stopTracking();
+		userService.tracker.stopTracking();
 
 		System.out.println("highVolumeGetRewards: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime())
 				+ " seconds.");

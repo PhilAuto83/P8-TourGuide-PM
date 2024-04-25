@@ -2,7 +2,7 @@ package com.phildev.tourguide;
 
 import com.phildev.tourguide.helper.InternalTestHelper;
 import com.phildev.tourguide.service.RewardsService;
-import com.phildev.tourguide.service.TourGuideService;
+import com.phildev.tourguide.service.UserService;
 import com.phildev.tourguide.user.User;
 import com.phildev.tourguide.user.UserReward;
 import gpsUtil.GpsUtil;
@@ -26,14 +26,14 @@ public class TestRewardsService {
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 
 		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		UserService userService = new UserService(gpsUtil, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		Attraction attraction = gpsUtil.getAttractions().getFirst();
 		user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
-		tourGuideService.trackUserLocation(user);
+		userService.trackUserLocation(user);
 		List<UserReward> userRewards = user.getUserRewards();
-		tourGuideService.tracker.stopTracking();
+		userService.tracker.stopTracking();
         assertEquals(1, userRewards.size());
 	}
 
@@ -53,10 +53,10 @@ public class TestRewardsService {
 		rewardsService.setProximityBuffer(Integer.MAX_VALUE);
 
 		InternalTestHelper.setInternalUserNumber(1);
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		UserService tourGuideService = new UserService(gpsUtil, rewardsService);
 
 		rewardsService.calculateRewards(tourGuideService.getAllUsers().getFirst());
-		List<UserReward> userRewards = tourGuideService.getUserRewards(tourGuideService.getAllUsers().getFirst());
+		List<UserReward> userRewards = rewardsService.getUserRewards(tourGuideService.getAllUsers().getFirst());
 		tourGuideService.tracker.stopTracking();
 
 		assertEquals(gpsUtil.getAttractions().size(), userRewards.size());

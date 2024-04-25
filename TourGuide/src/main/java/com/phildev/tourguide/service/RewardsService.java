@@ -1,17 +1,16 @@
 package com.phildev.tourguide.service;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.springframework.stereotype.Service;
-
+import com.phildev.tourguide.user.User;
+import com.phildev.tourguide.user.UserReward;
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
 import rewardCentral.RewardCentral;
-import com.phildev.tourguide.user.User;
-import com.phildev.tourguide.user.UserReward;
+
+import java.util.List;
 
 @Service
 public class RewardsService {
@@ -19,6 +18,7 @@ public class RewardsService {
 
 	// proximity in miles
     private int defaultProximityBuffer = 10;
+	@Setter
 	private int proximityBuffer = defaultProximityBuffer;
 	private int attractionProximityRange = 200;
 	private final GpsUtil gpsUtil;
@@ -28,11 +28,11 @@ public class RewardsService {
 		this.gpsUtil = gpsUtil;
 		this.rewardsCentral = rewardCentral;
 	}
-	
-	public void setProximityBuffer(int proximityBuffer) {
-		this.proximityBuffer = proximityBuffer;
+
+	public List<UserReward> getUserRewards(User user) {
+		return user.getUserRewards();
 	}
-	
+
 	public void setDefaultProximityBuffer() {
 		proximityBuffer = defaultProximityBuffer;
 	}

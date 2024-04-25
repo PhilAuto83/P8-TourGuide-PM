@@ -48,8 +48,8 @@
 			<groupId>gpsUtil</groupId>
 			<artifactId>gpsUtil</artifactId>
 			<scope>system</scope>
-			<version>1.0</version>
 			<systemPath>${project.basedir}\libs\gpsUtil.jar</systemPath>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>RewardCentral</groupId>

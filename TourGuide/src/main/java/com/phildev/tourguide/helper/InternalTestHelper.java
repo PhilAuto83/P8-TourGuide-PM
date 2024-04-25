@@ -1,5 +1,7 @@
 package com.phildev.tourguide.helper;
 
+import com.phildev.tourguide.user.User;
+
 public class InternalTestHelper {
 
 	// Set this default up to 100,000 for testing
@@ -12,4 +14,6 @@ public class InternalTestHelper {
 	public static int getInternalUserNumber() {
 		return internalUserNumber;
 	}
+
+
 }
