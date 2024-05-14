@@ -31,7 +31,7 @@ public class TestAttractionService {
 		UserService userService = new UserService(gpsUtil, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
-		VisitedLocation visitedLocation = userService.trackUserLocation(user);
+		VisitedLocation visitedLocation = userService.trackUserLocation(user).join();
 
 		List<Attraction> attractions = attractionService.getFiveClosestAttractions(visitedLocation);
 
