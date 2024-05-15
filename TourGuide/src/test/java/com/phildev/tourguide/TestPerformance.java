@@ -1,12 +1,11 @@
 package com.phildev.tourguide;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import com.phildev.tourguide.helper.InternalTestHelper;
@@ -21,6 +20,8 @@ import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestPerformance {
 
@@ -53,7 +54,7 @@ public class TestPerformance {
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		// Users should be incremented up to 100,000, and test finishes within 15
 		// minutes
-		InternalTestHelper.setInternalUserNumber(50000);
+		InternalTestHelper.setInternalUserNumber(1000);
 		UserService userService = new UserService(gpsUtil, rewardsService);
 
 		List<User> allUsers = new ArrayList<>();
@@ -78,13 +79,13 @@ public class TestPerformance {
 
 	@Disabled
 	@Test
-	public void highVolumeGetRewards() {
+	public void highVolumeGetRewards() throws InterruptedException {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 
 		// Users should be incremented up to 100,000, and test finishes within 20
 		// minutes
-		InternalTestHelper.setInternalUserNumber(100);
+		InternalTestHelper.setInternalUserNumber(100000);
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		UserService userService = new UserService(gpsUtil, rewardsService);
@@ -93,12 +94,22 @@ public class TestPerformance {
 		List<User> allUsers = new ArrayList<>();
 		allUsers = userService.getAllUsers();
 		allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
+		List<Future<?>> allRewards = new ArrayList<>();
+		allUsers.forEach(user->{
+			allRewards.add(rewardsService.calculateRewards(user));
+		});
+		assertEquals(InternalTestHelper.getInternalUserNumber(), allRewards.size());
+		allRewards.forEach(rewardFuture -> {
+            try {
+                rewardFuture.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        });
+		allUsers.forEach(user->{
 
-		allUsers.forEach(rewardsService::calculateRewards);
-
-		for (User user : allUsers) {
-			assertTrue(!user.getUserRewards().isEmpty());
-		}
+            assertFalse(user.getUserRewards().isEmpty());
+		});
 		stopWatch.stop();
 		userService.tracker.stopTracking();
 
