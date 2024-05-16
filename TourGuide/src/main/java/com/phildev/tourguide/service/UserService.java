@@ -66,7 +66,7 @@ public class UserService {
     public CompletableFuture<VisitedLocation> trackUserLocation(User user) {
         CompletableFuture<VisitedLocation> visitedLocation = CompletableFuture.supplyAsync(()->gpsUtil.getUserLocation(user.getUserId()));
         visitedLocation.thenAccept(user::addToVisitedLocations)
-                .thenRun(()->rewardsService.getUserRewards(user));
+                .thenRun(()->rewardsService.calculateRewards(user));
         return visitedLocation;
     }
 

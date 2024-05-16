@@ -44,8 +44,7 @@ public class RewardsService {
 	}
 	
 	public Future<?> calculateRewards(User user) {
-		return executorService.submit(()->
-		/*return CompletableFuture.runAsync(()->*/{
+		return executorService.submit(()->{
 			List<VisitedLocation> userLocations =user.getVisitedLocations();
 			List<Attraction> attractions = gpsUtil.getAttractions();
 

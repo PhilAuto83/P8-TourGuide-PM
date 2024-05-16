@@ -14,6 +14,7 @@ import rewardCentral.RewardCentral;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TestRewardsService {
 
 	@Test
-	public void userGetRewards() {
+	public void userGetRewards() throws InterruptedException {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 
@@ -31,7 +32,8 @@ public class TestRewardsService {
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		Attraction attraction = gpsUtil.getAttractions().getFirst();
 		user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
-		userService.trackUserLocation(user);
+		userService.trackUserLocation(user).join();
+		Thread.sleep(1000);
 		List<UserReward> userRewards = user.getUserRewards();
 		userService.tracker.stopTracking();
         assertEquals(1, userRewards.size());
@@ -47,7 +49,7 @@ public class TestRewardsService {
 
 
 	@Test
-	public void nearAllAttractions() {
+	public void nearAllAttractions() throws ExecutionException, InterruptedException {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		rewardsService.setProximityBuffer(Integer.MAX_VALUE);
@@ -55,7 +57,7 @@ public class TestRewardsService {
 		InternalTestHelper.setInternalUserNumber(1);
 		UserService tourGuideService = new UserService(gpsUtil, rewardsService);
 
-		rewardsService.calculateRewards(tourGuideService.getAllUsers().getFirst());
+		rewardsService.calculateRewards(tourGuideService.getAllUsers().getFirst()).get();
 		List<UserReward> userRewards = rewardsService.getUserRewards(tourGuideService.getAllUsers().getFirst());
 		tourGuideService.tracker.stopTracking();
 
