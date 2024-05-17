@@ -1,6 +1,6 @@
 # This workflow will build TourGuide Project project with Maven
 
-name: Build and test TourGuide Project PM
+name: Build, test and upload TourGuide Project PM
 
 on:
   push:
@@ -9,12 +9,12 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  build-test-upload:
 
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get current TourGuide Porject on master
+    - name: Get current TourGuide Project on master
       uses: actions/checkout@v4
     - name: Set up JDK 21
       uses: actions/setup-java@v3
