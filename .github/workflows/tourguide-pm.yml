@@ -22,6 +22,11 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+    - name: Add external jars to local maven repository
+      run: |
+       mvn install:install-file -Dfile="./TourGuide/libs/gpsUtil.jar" -DgroupId=gpsUtil -DartifactId=gpsUtil -Dversion=1.0.0 -Dpackaging=jar
+       mvn install:install-file -Dfile="./TourGuide/libs/RewardCentral.jar" -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar
+       mvn install:install-file -Dfile="./TourGuide/libs/TripPricer.jar" -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
     - name: Build with Maven
       run: mvn -B package --file ./TourGuide/pom.xml
     - name: Print current directory with project files
