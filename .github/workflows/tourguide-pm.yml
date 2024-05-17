@@ -32,6 +32,6 @@ jobs:
     - name: Print current directory with project files
       run: ls -a ./TourGuide
     - name: Print target folder content
-      run: ls -a .TourGuide/target
+      run: ls -a ./TourGuide/target
 
    
