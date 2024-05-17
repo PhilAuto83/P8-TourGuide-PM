@@ -16,7 +16,6 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
-		<spring.boot.mainclass>com.phildev.tourguide.TourGuideApplication</spring.boot.mainclass>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -77,7 +76,7 @@
 							<goal>repackage</goal>
 						</goals>
 						<configuration>
-							<mainClass>${spring.boot.mainclass}</mainClass>
+							<skip>true</skip>
 						</configuration>
 					</execution>
 				</executions>
