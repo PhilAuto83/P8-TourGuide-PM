@@ -9,7 +9,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build-test-upload:
+  build-test-push-image:
 
     runs-on: ubuntu-latest
 
