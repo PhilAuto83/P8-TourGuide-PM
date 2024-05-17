@@ -8,10 +8,12 @@
 
 ## How to have gpsUtil, rewardCentral and tripPricer dependencies available ?
 
+**Go to the root of the project where you can see libs folder**
+
 > Run : 
->- mvn install:install-file -Dfile=/libs/gpsUtil.jar -DgroupId=gpsUtil -DartifactId=gpsUtil -Dversion=1.0.0 -Dpackaging=jar  
->- mvn install:install-file -Dfile=/libs/RewardCentral.jar -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar  
->- mvn install:install-file -Dfile=/libs/TripPricer.jar -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
+>- mvn install:install-file -Dfile=".\libs\gpsUtil.jar" -DgroupId=gpsUtil -DartifactId=gpsUtil -Dversion=1.0.0 -Dpackaging=jar  
+>- mvn install:install-file -Dfile=".\libs\RewardCentral.jar" -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar  
+>- mvn install:install-file -Dfile=".\libs\TripPricer.jar" -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
 
 You can now add the dependencies in your pom.xml as the external apps are now downloaded locally in your .m2 repository and added to your external libraries in your project
 
