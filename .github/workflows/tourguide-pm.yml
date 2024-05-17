@@ -38,6 +38,7 @@ jobs:
         mkdir tourguide-jar-dockerfile
         cp ./TourGuide/target/*.jar tourguide-jar-docker
         cp ./TourGuide/Dockerfile tourguide-jar-docker
+        ls -a
     - name: Upload artifact with jar and docker file
       uses: actions/upload-artifact@v4
       with:
