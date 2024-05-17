@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.IntStream;
 
 @Service
@@ -44,7 +45,7 @@ public class UserService {
 
     public VisitedLocation getUserLocation(User user) {
         return (!user.getVisitedLocations().isEmpty()) ? user.getLastVisitedLocation()
-                : trackUserLocation(user);
+                : trackUserLocation(user).join();
     }
 
     public User getUser(String userName) {
@@ -62,10 +63,10 @@ public class UserService {
         }
     }
 
-    public VisitedLocation trackUserLocation(User user) {
-        VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
-        user.addToVisitedLocations(visitedLocation);
-        rewardsService.calculateRewards(user);
+    public CompletableFuture<VisitedLocation> trackUserLocation(User user) {
+        CompletableFuture<VisitedLocation> visitedLocation = CompletableFuture.supplyAsync(()->gpsUtil.getUserLocation(user.getUserId()));
+        visitedLocation.thenAccept(user::addToVisitedLocations)
+                .thenRun(()->rewardsService.calculateRewards(user));
         return visitedLocation;
     }
 
