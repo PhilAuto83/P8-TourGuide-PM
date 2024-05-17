@@ -29,10 +29,23 @@ jobs:
        mvn install:install-file -Dfile="./TourGuide/libs/TripPricer.jar" -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
     - name: Build with Maven
       run: mvn -B package --file ./TourGuide/pom.xml
-    - name: Print current directory with project files
-      run: ls -a ./TourGuide
     - name: Print target folder content
       run: ls -a ./TourGuide/target
-    
+    - name: Print target folder content
+      run: ls -a ./TourGuide/target
+    - name: Move to directory containing the dockerfile
+      run: |
+        cd TourGuide
+        ls -a
+    - uses: mr-smithers-excellent/docker-build-push@v6
+      name: Build & push Docker image
+      with:
+        image: philm83/oc-projects
+        tag: tourguide-pm        
+        registry: docker.io
+        enableBuildKit: true
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      
 
    
