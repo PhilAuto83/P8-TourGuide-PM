@@ -1,6 +1,6 @@
 # This workflow will build TourGuide Project project with Maven
 
-name: Build, test and upload TourGuide Project PM
+name: Build, test and push image TourGuide Project PM to Docker hub
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
       name: Build & push Docker image
       with:
         image: philm83/oc-projects
-        tag: tourguide-pm        
+        tags: tourguide-pm        
         registry: docker.io
         enableBuildKit: true
         username: ${{ secrets.DOCKER_USERNAME }}
