@@ -32,7 +32,12 @@ jobs:
     - name: Print target folder content
       run: ls -a ./TourGuide/target
     - name: Print target folder content
-      run: ls -a ./TourGuide/target 
+      run: ls -a ./TourGuide/target
+    - name: Upload TourGuide jar as an artifact in pipeline
+      uses: actions/upload-artifact@v4
+      with:
+        name: tourguide.jar
+        path: ./TourGuide/*.jar
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
