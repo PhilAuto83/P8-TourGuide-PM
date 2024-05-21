@@ -1,6 +1,6 @@
 package com.phildev.tourguide.helper;
 
-import com.phildev.tourguide.user.User;
+
 
 public class InternalTestHelper {
 
