@@ -8,6 +8,7 @@ import tripPricer.Provider;
 import tripPricer.TripPricer;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TripDealService {
@@ -17,6 +18,12 @@ public class TripDealService {
 
     private final TripPricer tripPricer = new TripPricer();
 
+    /**
+     * This method is returning a list of Providers with special offers based on user preferences and reward points
+     * It is calling {@link TripPricer#getPrice(String, UUID, int, int, int, int)} method
+     * @param user
+     * @return a list of {@link Provider}
+     */
     public List<Provider> getTripDeals(User user) {
         int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(UserReward::getRewardPoints).sum();
         List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(),

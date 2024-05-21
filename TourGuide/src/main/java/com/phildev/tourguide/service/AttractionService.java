@@ -28,7 +28,7 @@ public class AttractionService {
 
 	/**
 	 * This method is sorting attractions by distance with a tree map and then adding 5 attractions in an array to have the 5 closest attraction from user current location
-	 * @param visitedLocation which is th latest user location
+	 * @param visitedLocation which is the latest user location
 	 * @return an array of {@link Attraction} with only 5 sorted by distance from user current location
 	 */
 	public List<Attraction> getFiveClosestAttractions(VisitedLocation visitedLocation){

@@ -28,3 +28,9 @@ To reach the container where tomcat is running on port 8080, you need to specify
 - run the following command to start container with the image built previously : `docker run -p 9000:8080 pm/tourguide:1.1.0`
 - on your local machine, open a browser and type http://localhost:9000
 
+## TourGuide Architecture
+
+Here is the architecture of the project which has been broken down in separate services :
+
+![TourGuide-PM schema](Archi%20TourGuide.png)
+
